@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GSS Value Flow — Factory</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="page">
+  <h1>GSS — what goes in, what comes out</h1>
+  <p class="subtitle">Left: what the wijk brings to GSS. Middle: GSS itself. Right: the value that flows back out, organised by type.</p>
+
+  <div class="how-to">
+    <div class="how-to-title">Click to explore</div>
+    <div class="how-to-grid">
+      <div class="ht-step">
+        <div class="ht-visual">
+          <span class="ht-chip-demo">🍅 Tomatoes</span>
+          <span class="ht-finger">👆</span>
+        </div>
+        <div class="ht-text">A <strong>chip</strong><br>→ see what it makes</div>
+      </div>
+      <div class="ht-step">
+        <div class="ht-visual">
+          <span class="ht-card-demo"></span>
+          <span class="ht-finger">👆</span>
+        </div>
+        <div class="ht-text">A <strong>card</strong><br>→ see where it comes from</div>
+      </div>
+      <div class="ht-step">
+        <div class="ht-visual">
+          <span class="ht-btn-demo">📷&nbsp;Photo</span>
+          <span class="ht-finger">👆</span>
+        </div>
+        <div class="ht-text"><strong>Photo</strong> button<br>→ see the picture</div>
+      </div>
+      <div class="ht-step">
+        <div class="ht-visual">
+          <span class="ht-btn-demo">💬&nbsp;Quote</span>
+          <span class="ht-finger">👆</span>
+        </div>
+        <div class="ht-text"><strong>Quote</strong> button<br>→ read a story</div>
+      </div>
+    </div>
+    <button class="how-to-dismiss" id="how-to-dismiss" type="button" aria-label="Hide instructions">
+      <span class="dismiss-x">×</span><span class="dismiss-label">Hide</span>
+    </button>
+  </div>
+  <button class="how-to-reopen" id="how-to-reopen" type="button" aria-label="Show instructions">
+    <span class="reopen-icon">?</span><span class="reopen-label">Help</span>
+  </button>
+
+  <div class="filters">
+    <div class="filters-row">
+      <span class="filter-group-label">Show only:</span>
+      <span id="value-filters"></span>
+      <button class="petals-toggle" id="petals-toggle" type="button" aria-expanded="false">
+        <span class="petals-toggle-flower" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <g transform="translate(12,12)">
+              <ellipse cx="0" cy="-6" rx="3" ry="6" fill="#E5B82E" opacity="0.85" transform="rotate(0)"/>
+              <ellipse cx="0" cy="-6" rx="3" ry="6" fill="#4A9A3F" opacity="0.85" transform="rotate(72)"/>
+              <ellipse cx="0" cy="-6" rx="3" ry="6" fill="#4080C4" opacity="0.85" transform="rotate(144)"/>
+              <ellipse cx="0" cy="-6" rx="3" ry="6" fill="#C73E3A" opacity="0.85" transform="rotate(216)"/>
+              <ellipse cx="0" cy="-6" rx="3" ry="6" fill="#8B5CA6" opacity="0.85" transform="rotate(288)"/>
+              <circle cx="0" cy="0" r="3" fill="#FFF" stroke="#1F2A44" stroke-width="1"/>
+            </g>
+          </svg>
+        </span>
+        <span class="petals-toggle-text">Value breakdown</span>
+        <span class="petals-toggle-caret" aria-hidden="true">▾</span>
+      </button>
+    </div>
+    <div class="petals-panel" id="petals-panel" hidden>
+      <div class="petals-panel-head">
+        <div class="petals-panel-title">Outcomes per value type</div>
+        <div class="petals-panel-sub">Bigger petal = more outcomes deliver that value. Click any petal to filter the map to just that value type.</div>
+      </div>
+      <div class="petals-vis">
+        <svg viewBox="0 0 260 260" class="petals-svg" id="petals-svg"></svg>
+        <ul class="petals-legend" id="petals-legend"></ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="three-zones">
+
+  <svg id="path-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+
+  <section class="zone zone-inputs">
+    <div class="zone-header">
+      <div class="zone-eyebrow">Inputs</div>
+      <h2>What goes in</h2>
+    </div>
+    <div id="inputs-list"></div>
+  </section>
+
+  <section class="zone zone-gss">
+    <div class="gss-photo" aria-hidden="true"></div>
+    <div class="gss-content">
+      <div class="zone-header">
+        <div class="zone-eyebrow">The workshop</div>
+        <h2>GSS</h2>
+      </div>
+      <div class="process-steps">
+        <div class="process-eyebrow">Inside, the process:</div>
+        <ol>
+          <li>Harvest</li>
+          <li>Storage</li>
+          <li>(Re)processing</li>
+          <li>Distribution</li>
+          <li>Access</li>
+        </ol>
+      </div>
+      <div class="gss-tagline">585 ton/year · 12 workers · 96% reuse</div>
+    </div>
+  </section>
+
+  <section class="zone zone-outputs">
+    <div class="zone-header">
+      <div class="zone-eyebrow">Outputs</div>
+      <h2>What comes out</h2>
+    </div>
+    <div id="outputs-list"></div>
+  </section>
+
+</main>
+
+<aside id="panel">
+  <header class="panel-head">
+    <h3 id="panel-title">Outcome</h3>
+    <div id="panel-desc" class="panel-desc"></div>
+    <div id="panel-route" class="panel-route"></div>
+    <button id="panel-close" class="close" aria-label="Close">×</button>
+  </header>
+  <div class="panel-inner">
+    <section>
+      <h4>Value types (CVF petals)</h4>
+      <div id="panel-petals" class="petal-row"></div>
+    </section>
+    <section>
+      <h4>Numbers</h4>
+      <div id="panel-numbers"></div>
+    </section>
+    <section>
+      <h4>Photos</h4>
+      <div id="panel-photos"></div>
+    </section>
+    <section>
+      <h4>Stories &amp; testimonies</h4>
+      <div id="panel-stories"></div>
+    </section>
+  </div>
+</aside>
+
+<div class="nav-bar">
+  View: <strong>Factory</strong> ·
+  <a href="../value_flow_overview/index.html">Overview</a> ·
+  <a href="../value_flow_zoom/index.html">Modular</a> ·
+  <a href="../value_flow_mindmap/index.html">Mindmap</a> ·
+  <a href="../value_flow_map/index.html">Linear lanes</a> ·
+  <a href="../value_flow_radial/index.html">Radial</a>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
